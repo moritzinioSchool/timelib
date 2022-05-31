@@ -3,23 +3,23 @@
 //
 // Berechnet fuer gegebenes Datum die Nummer des angegebenen Tages
 //
-int day_of_the_year(int _day, int _month, int _year)
+int day_of_the_year(struct date _date)
 {
     int day_of_year = -1;
     // pruefen ob Tag existiert
-    if (exists_date(_day, _month, _year) == 1)
+    if (exists_date(_date) == 1)
     {
         // Tage der Monate davor
         day_of_year = 0;
-        for (int i = 0; i < _month -1; i++)
+        for (int i = 0; i < _date.month -1; i++)
         {
-            day_of_year += get_days_for_month(_month, _year);
+            day_of_year += get_days_for_month(_date);
         }
         // +Tag im aktuellen Monat
-        day_of_year += _day;
+        day_of_year += _date.day;
 
         // +1 Bei Schaltjahr
-        if (is_leapyear(_year) == 1 && _month > 2)
+        if (is_leapyear(_date) == 1 && _date.month > 2)
         {
             day_of_year += 1;
         }
@@ -31,16 +31,16 @@ int day_of_the_year(int _day, int _month, int _year)
 //
 // Schaltjahresbestimmung
 //
-int is_leapyear(int _year)
+int is_leapyear(struct date _date)
 {
     int year_is_leapyear = -1;
-    if (_year >= 1582)
+    if (_date.year >= 1582)
     {
-        if (_year % 4 == 0)
+        if (_date.year % 4 == 0)
         {
-            if (_year % 100 == 0)
+            if (_date.year % 100 == 0)
             {
-                if (_year % 400 == 0)
+                if (_date.year % 400 == 0)
                 {
                     // Schaltjahr
                     year_is_leapyear = 1;
@@ -75,21 +75,21 @@ int is_leapyear(int _year)
 //
 // Bestimmung der Tage des Angegebenen Monats
 //
-int get_days_for_month(int _month, int _year) 
+int get_days_for_month(struct date _date) 
 {
     int days_per_month[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
     int day_of_the_month = -1;
-    if (_month > 0 && _month < 13)
+    if (_date.month > 0 && _date.month < 13)
     {
-        if (_month == 2 && is_leapyear(_year) == 1)
+        if (_date.month == 2 && is_leapyear(_date) == 1)
         {
             // Februar Schaltjahr
-            day_of_the_month = days_per_month[_month] + 1;
+            day_of_the_month = days_per_month[_date.month] + 1;
         }
         else 
         {
             // Kein Schaltjahr
-            day_of_the_month = days_per_month[_month];
+            day_of_the_month = days_per_month[_date.month];
         }
     }
     else
@@ -103,12 +103,12 @@ int get_days_for_month(int _month, int _year)
 //
 // Ueberprueft ob angegebenes Datum gueltig ist
 //
-int exists_date(int _day, int _month, int _year)
+int exists_date(struct date _date)
 {
     int date_exists = 0;
-    if (_day > 0 && _day <= get_days_for_month(_month, _year) 
-        && _month > 0 && _month <= get_days_for_month(_month, _year)
-        && _year > 1581 && _year < 2401)
+    if (_date.day > 0 && _date.day <= get_days_for_month(_date) 
+        && _date.month > 0 && _date.month <= get_days_for_month(_date)
+        && _date.year > 1581 && _date.year < 2401)
     {
         date_exists = 1;
     }

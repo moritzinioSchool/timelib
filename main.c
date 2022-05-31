@@ -11,23 +11,21 @@
 
 int main()
 {
-    int year = 0;
-    int month = 0;
-    int day = 0;
+    struct date _date;
 
     //
     // Einlesen
     //
     printf("Geben Sie das Jahr ein: ");
-    scanf("%i", &year);
+    scanf("%i", &_date.year);
     printf("Geben Sie den Monat ein: ");
-    scanf("%i", &month);
+    scanf("%i", &_date.month);
     printf("Geben Sie den Tag ein: ");
-    scanf("%i", &day);
+    scanf("%i", &_date.day);
 
     //
     // Ausgabe
     //
-    printf("\nEs ist der %i Tag des Jahres!\n", day_of_the_year);
+    printf("\nEs ist der %i Tag des Jahres!\n", day_of_the_year(_date));
 
 }
